@@ -1,10 +1,11 @@
 beautysh
 calibre-plugin-dedrm
-glibc-debug
-grimshot
+grub-customizer
+hpaper
 js-beautify
 osu-lazer-bin
 rider
 tumbler-extra-thumbnailers
 unigine-superposition
+wpgtk
 zsh-antidote
