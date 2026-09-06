@@ -1,4 +1,8 @@
-app.zen_browser.zen
-com.bambulab.BambuStudio
 com.github.tchx84.Flatseal
+com.hypixel.HytaleLauncher
+com.orcaslicer.OrcaSlicer
 dev.goats.xivlauncher
+it.mijorus.gearlever
+one.ablaze.floorp
+org.shotcut.Shotcut
+sh.ppy.osu

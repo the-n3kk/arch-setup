@@ -6,48 +6,17 @@ if [[ ! "$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]')" =~ ^arch-setup$ ]]; 
     exit
 fi
 
-sudo pacman -S --noconfirm archlinux-keyring plymouth
+sudo pacman -S --noconfirm archlinux-keyring
 sudo sed -i 's/^#\{0,1\}ParallelDownloads.*$/ParallelDownloads = 20/' /etc/pacman.conf
 sudo pacman -S --noconfirm --needed reflector git archinstall stow
-sudo reflector -a 48 -c Netherlands -f 10 | sudo tee /etc/pacman.d/mirrorlist
-
-#-------------------------------------------------------------------------
-#               Grub Boot Menu
-#-------------------------------------------------------------------------
-
-# set kernel parameter for adding splash screen
-sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
-
-THEME_DIR="/boot/grub/themes"
-THEME_NAME=CyberRe
-
-sudo mkdir -p ${THEME_DIR}
-sudo cp -r configs${THEME_DIR}* ${THEME_DIR}/
-sudo cp -an /etc/default/grub /etc/default/grub.bak
-sudo grep "GRUB_THEME=" /etc/default/grub && sed -i '/GRUB_THEME=/d' /etc/default/grub
-sudo echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | suto tee -a /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-
-#-------------------------------------------------------------------------
-#               Login Display Manager
-#-------------------------------------------------------------------------
-
-sudo pacman -S greetd nwg-hello
-sudo systemctl enable greetd
-
-sudo cp -r config/etc/* /etc/
-
+sudo reflector -a 48 -c Poland -f 10 | sudo tee /etc/pacman.d/mirrorlist
 
 #-------------------------------------------------------------------------
 #               Packages
 #-------------------------------------------------------------------------
 
-yayPackages=$(sed -E 's/ /, /gm;t' <<< cat 'pkgs/yay.txt')
-yay -S "${yayPackages}"
-
-pacmanPackages=$(sed -E 's/ /, /gm;t' <<< cat 'pkgs/pacman.txt')
-sudo pacman -S "${pacmanPackages}"
+paru -Syu "$(awk '{print}' ORS=' ' pkgs/paru.txt)"
+sudo pacman -Syu "$(awk '{print}' ORS=' ' pkgs/pacman.txt)"
 
 
 #-------------------------------------------------------------------------
